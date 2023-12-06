@@ -9,3 +9,18 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Issue {
+  id          Int      @id @default(autoincrement())
+  tittle      String   @db.VarChar(255)
+  description String   @db.Text
+  status      STATUS   @default(OPEN)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum STATUS {
+  OPEN
+  IN_PROGESS
+  CLOSED
+}
