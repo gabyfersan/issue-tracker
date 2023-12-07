@@ -8,6 +8,7 @@ const IssuesPage = () => {
       <Button>
         <Link href="/issues/new">New Issue</Link>
       </Button>
+   
     </div>
   );
 };
