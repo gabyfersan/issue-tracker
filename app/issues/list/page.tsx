@@ -1,10 +1,18 @@
 import { IssueStatusBadge, Link } from "@/app/components";
 import prisma from "@/prisma/client";
+import { Status } from "@prisma/client";
 import { Table } from "@radix-ui/themes";
 import IssueActions from "./IssueActions";
 
-const IssuesPage = async () => {
-  const issues = await prisma.issue.findMany();
+const IssuesPage = async ({
+  searchParams,
+}: {
+  searchParams: { status: Status };
+}) => {
+  const { status } = searchParams;
+  const issues = await prisma.issue.findMany({
+    where: { status: Status[searchParams.status] ? status : undefined },
+  });
   return (
     <div>
       <IssueActions />
@@ -26,11 +34,11 @@ const IssuesPage = async () => {
               <Table.Cell>
                 <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
                 <div className='block md:hidden'>
-                  {<IssueStatusBadge status={issue.status} />}
+                  <IssueStatusBadge status={issue.status} />
                 </div>
               </Table.Cell>
               <Table.Cell className='hidden md:table-cell'>
-                {<IssueStatusBadge status={issue.status} />}
+                <IssueStatusBadge status={issue.status} />
               </Table.Cell>
               <Table.Cell className='hidden md:table-cell'>
                 {issue.createdAt.toDateString()}
