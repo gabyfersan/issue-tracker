@@ -11,14 +11,21 @@ const IssuesPage = async ({
 }: {
   searchParams: { status: Status; orderBy: keyof Issue };
 }) => {
-  const colums: { label: string; value: keyof Issue; className?: string }[] = [
+  const columns: { label: string; value: keyof Issue; className?: string }[] = [
     { label: "Issue", value: "title" },
     { label: "Status", value: "status", className: "hidden md:table-cell" },
     { label: "Created", value: "createdAt", className: "hidden md:table-cell" },
   ];
   const { status } = searchParams;
+  const orderBy = columns
+    .map((column) => column.value)
+    .includes(searchParams.orderBy)
+    ? { [searchParams.orderBy]: "asc" }
+    : undefined;
+
   const issues = await prisma.issue.findMany({
-    where: { status: Status[searchParams.status] ? status : undefined },
+    where: { status: Status[status] ? status : undefined },
+    orderBy,
   });
 
   return (
@@ -27,17 +34,17 @@ const IssuesPage = async ({
       <Table.Root variant='surface'>
         <Table.Header>
           <Table.Row>
-            {colums.map((colum) => (
+            {columns.map((column) => (
               <Table.ColumnHeaderCell
-                key={colum.value}
-                className={colum.className}
+                key={column.value}
+                className={column.className}
               >
                 <NextLink
-                  href={{ query: { ...searchParams, orderBy: colum.value } }}
+                  href={{ query: { ...searchParams, orderBy: column.value } }}
                 >
-                  {colum.label}
+                  {column.label}
                 </NextLink>
-                {searchParams.orderBy === colum.value && (
+                {column.value === searchParams.orderBy && (
                   <ArrowUpIcon className='inline' />
                 )}
               </Table.ColumnHeaderCell>
