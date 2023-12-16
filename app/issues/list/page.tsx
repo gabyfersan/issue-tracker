@@ -1,15 +1,15 @@
 import { IssueStatusBadge, Link } from "@/app/components";
+import Pagination from "@/app/components/Pagination";
 import prisma from "@/prisma/client";
 import { Issue, Status } from "@prisma/client";
 import { ArrowUpIcon } from "@radix-ui/react-icons";
 import { Table } from "@radix-ui/themes";
 import NextLink from "next/link";
 import IssueActions from "./IssueActions";
-import Pagination from "@/app/components/Pagination";
 const IssuesPage = async ({
   searchParams,
 }: {
-  searchParams: { status: Status; orderBy: keyof Issue };
+  searchParams: { status: Status; orderBy: keyof Issue; page: string };
 }) => {
   const columns: { label: string; value: keyof Issue; className?: string }[] = [
     { label: "Issue", value: "title" },
@@ -70,7 +70,11 @@ const IssuesPage = async ({
           ))}
         </Table.Body>
       </Table.Root>
-      <Pagination pageSize={10} currentPage={2} itemCount={100} />
+      <Pagination
+        pageSize={10}
+        currentPage={parseInt(searchParams.page)}
+        itemCount={100}
+      />
     </div>
   );
 };
