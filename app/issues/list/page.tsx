@@ -16,16 +16,27 @@ const IssuesPage = async ({
     { label: "Status", value: "status", className: "hidden md:table-cell" },
     { label: "Created", value: "createdAt", className: "hidden md:table-cell" },
   ];
-  const { status } = searchParams;
+
+  const status: Status | undefined = Status[searchParams.status]
+    ? searchParams.status
+    : undefined;
   const orderBy = columns
     .map((column) => column.value)
     .includes(searchParams.orderBy)
     ? { [searchParams.orderBy]: "asc" }
     : undefined;
 
+  const pageSize = 10;
+  const page = parseInt(searchParams.page) || 1;
   const issues = await prisma.issue.findMany({
-    where: { status: Status[status] ? status : undefined },
+    where: { status },
     orderBy,
+    skip: (page - 1) * pageSize,
+    take: pageSize,
+  });
+
+  const issueCount = await prisma.issue.count({
+    where: { status },
   });
 
   return (
@@ -71,9 +82,9 @@ const IssuesPage = async ({
         </Table.Body>
       </Table.Root>
       <Pagination
-        pageSize={10}
-        currentPage={parseInt(searchParams.page)}
-        itemCount={100}
+        pageSize={pageSize}
+        currentPage={page}
+        itemCount={issueCount}
       />
     </div>
   );
