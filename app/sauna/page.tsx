@@ -56,7 +56,7 @@ let g = {
     "1fr 1fr 1fr 1fr  1fr  1fr  1fr 1fr 1fr  1fr  1fr  1fr",
   //  "position": "fixed"
   //contain: "paint",
-  height: "800px",
+  height: "700px",
   width: "100%",
   "white-space": "nowrap",
   overflow: "auto",
