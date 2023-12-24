@@ -30,24 +30,22 @@ const getAllHours = () => {
 };
 
 let div = {
-  height: "3em",
+  height: "5em",
   width: "5em",
   border: "2px solid #ffa94d",
   "border-radius": "5px",
   "background-color": "#ffd8a8",
-
   color: "#d9480f",
   "text-align": "center",
   overflow: "clip",
 };
 
 let div2 = {
-  height: "3em",
-  width: "8em",
+  height: "5em",
+  width: "7em",
   border: "2px solid #ffa94d",
   "border-radius": "5px",
   "background-color": "green",
-
   color: "#d9480f",
   "text-align": "center",
 };
@@ -55,7 +53,11 @@ let div2 = {
 let g = {
   "grid-template-columns": "1fr 1fr 1fr 1fr",
   //  "position": "fixed"
-  contain: "paint",
+  //contain: "paint",
+  height: "600px",
+  width: "300px",
+  "white-space": "nowrap",
+  overflow: "scroll",
 };
 
 const Sauna = () => {
@@ -66,28 +68,26 @@ const Sauna = () => {
       <Flex
         direction='column'
         // gap='0'
-        // className=' sticky left-5'
+         className=' sticky left-5'
       >
         {allHours.map((a) => (
           <div
             key={a}
             style={div}
-            className={`flex items-center justify-center  sticky left-5	
-            ${a === "00:00" ? " sticky left-5" : ""}
-            `}
+            className={`flex items-center justify-center sticky left-0`}
           >
             <Text size='6'>{a}</Text>
           </div>
         ))}
       </Flex>
       {[1, 2, 3].map((aa) => (
-        <Flex direction='column' m='2' key={aa}>
+        <Flex direction='column' key={aa}>
           {getAllBookinHours().map((a) => (
             <div
               key={a.label}
               style={div2}
               className={`flex items-center justify-center 	${
-                a.label ? " sticky top-6" : ""
+                a.label ? " sticky top-0" : ""
               }`}
             >
               <Text size='6'>{a.label}</Text>
