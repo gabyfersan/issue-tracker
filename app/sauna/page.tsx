@@ -37,6 +37,7 @@ let div = {
   "background-color": "#ffd8a8",
   color: "#d9480f",
   "text-align": "center",
+  margin: "2px 2px 2px 0",
   overflow: "clip",
 };
 
@@ -48,6 +49,7 @@ let div2 = {
   "background-color": "green",
   color: "#d9480f",
   "text-align": "center",
+  margin: "2px",
   //"z-index": "-1",
 };
 
@@ -56,7 +58,7 @@ let g = {
     "1fr 1fr 1fr 1fr  1fr  1fr  1fr 1fr 1fr  1fr  1fr  1fr",
   //  "position": "fixed"
   //contain: "paint",
-  height: "700px",
+  height: "600px",
   width: "100%",
   "white-space": "nowrap",
   overflow: "auto",
@@ -70,7 +72,7 @@ const Sauna = () => {
       <Flex
         direction='column'
         // gap='0'
-        className=' sticky left-0 z-10'
+        className=' sticky left-0 z-10 bg-white'
       >
         {allHours.map((a) => (
           <div
