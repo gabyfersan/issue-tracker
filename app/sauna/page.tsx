@@ -48,16 +48,18 @@ let div2 = {
   "background-color": "green",
   color: "#d9480f",
   "text-align": "center",
+  //"z-index": "-1",
 };
 
 let g = {
-  "grid-template-columns": "1fr 1fr 1fr 1fr",
+  "grid-template-columns":
+    "1fr 1fr 1fr 1fr  1fr  1fr  1fr 1fr 1fr  1fr  1fr  1fr",
   //  "position": "fixed"
   //contain: "paint",
-  height: "600px",
-  width: "300px",
+  height: "800px",
+  width: "100%",
   "white-space": "nowrap",
-  overflow: "scroll",
+  overflow: "auto",
 };
 
 const Sauna = () => {
@@ -68,7 +70,7 @@ const Sauna = () => {
       <Flex
         direction='column'
         // gap='0'
-         className=' sticky left-5'
+        className=' sticky left-0 z-10'
       >
         {allHours.map((a) => (
           <div
@@ -80,7 +82,7 @@ const Sauna = () => {
           </div>
         ))}
       </Flex>
-      {[1, 2, 3].map((aa) => (
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((aa) => (
         <Flex direction='column' key={aa}>
           {getAllBookinHours().map((a) => (
             <div
