@@ -70,6 +70,7 @@ const Sauna = () => {
       >
         {allHours.map((a) => (
           <div
+            key={a}
             style={div}
             className={`flex items-center justify-center  sticky left-5	
             ${a === "00:00" ? " sticky left-5" : ""}
@@ -79,10 +80,11 @@ const Sauna = () => {
           </div>
         ))}
       </Flex>
-      {[1, 2, 3].map(() => (
-        <Flex direction='column' m='2'>
+      {[1, 2, 3].map((aa) => (
+        <Flex direction='column' m='2' key={aa}>
           {getAllBookinHours().map((a) => (
             <div
+              key={a.label}
               style={div2}
               className={`flex items-center justify-center 	${
                 a.label ? " sticky top-6" : ""
