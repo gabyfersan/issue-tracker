@@ -2,18 +2,40 @@ import { Flex, Grid, Text } from "@radix-ui/themes";
 
 const bookinHours = [];
 
-const getAllBookinHours = () => {
+const getAllBookinHours = (index: number) => {
   const allBookinHours = [];
-
+  console.log(getAll(index - 1));
   for (let i = 1; i < 25; i++) {
-    allBookinHours.push(i === 1 ? { label: "23 juni" } : {});
+    allBookinHours.push(i === 1 ? { label: getAll(index - 1) } : {});
   }
   return allBookinHours;
 };
 const getAll = (addNumbersOfDays: number) => {
   //.toISOString().slice(0, 10);
-  const dateNow = new Date();
-  return dateNow.setDate(dateNow.getDate() + addNumbersOfDays);
+  //   const dateNow = new Date();
+  //   dateNow.setDate(dateNow.getDate() + addNumbersOfDays);
+
+  //   //let time = new Date();
+  // const options = {
+  //   weekday: "long",
+  //   year: "numeric",
+  //   month: "long",
+  //   day: "numeric",
+  // };
+  // dateNow.toLocaleTimeString('sv-SE', options).split(" ");
+
+  let date = new Date();
+  date.setDate(date.getDate() + addNumbersOfDays);
+
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
+  return date.toLocaleTimeString("sv-SE", options).split(" ");
+
+  //return date.toISOString().slice(0, 10);
 };
 
 const getAllHours = () => {
@@ -84,17 +106,28 @@ const Sauna = () => {
           </div>
         ))}
       </Flex>
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((aa) => (
-        <Flex direction='column' key={aa}>
-          {getAllBookinHours().map((a) => (
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+        <Flex direction='column' key={i}>
+          {getAllBookinHours(i).map((a, ii) => (
             <div
               key={a.label}
               style={div2}
-              className={`flex items-center justify-center 	${
-                a.label ? " sticky top-0" : ""
+              className={`flex items-center justify-center   	flex-col ${
+                a.label ? " !bg-white sticky top-0" : ""
               }`}
             >
-              <Text size='6'>{a.label}</Text>
+              {ii === 0 ? (
+                <>
+                  <Text size='3' className='block'>
+                    {a?.label[0]}
+                  </Text>
+
+                  <Text size='3'> {a?.label[1] + " " + a?.label[2]}</Text>
+                </>
+              ) : (
+                a.label
+              )}
+              <Text size='6'></Text>
             </div>
           ))}
         </Flex>
