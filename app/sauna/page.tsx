@@ -27,13 +27,24 @@ const getAll = (addNumbersOfDays: number) => {
   let date = new Date();
   date.setDate(date.getDate() + addNumbersOfDays);
 
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  };
-  return date.toLocaleTimeString("sv-SE", options).split(" ");
+
+  
+   return new Intl.DateTimeFormat('sv-SE', { weekday: "long",
+      year: "numeric",
+     month: "short",
+      day: "numeric",
+    }).format(date).split(" ");
+  
+
+
+
+  // const options = {
+  //   weekday: "long",
+  //   year: "numeric",
+  //   month: "short",
+  //   day: "numeric",
+  // };
+  // return date.toLocaleTimeString("sv-SE", options).split(" ");
 
   //return date.toISOString().slice(0, 10);
 };
