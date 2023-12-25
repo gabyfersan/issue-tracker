@@ -27,16 +27,14 @@ const getAll = (addNumbersOfDays: number) => {
   let date = new Date();
   date.setDate(date.getDate() + addNumbersOfDays);
 
-
-  
-   return new Intl.DateTimeFormat('sv-SE', { weekday: "long",
-      year: "numeric",
-     month: "short",
-      day: "numeric",
-    }).format(date).split(" ");
-  
-
-
+  return new Intl.DateTimeFormat("sv-SE", {
+    weekday: "long",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  })
+    .format(date)
+    .split(" ");
 
   // const options = {
   //   weekday: "long",
@@ -121,7 +119,7 @@ const Sauna = () => {
         <Flex direction='column' key={i}>
           {getAllBookinHours(i).map((a, ii) => (
             <div
-              key={a.label}
+              key={Array.isArray(a.label) ? a.label[1] : a.label}
               style={div2}
               className={`flex items-center justify-center   	flex-col ${
                 a.label ? " !bg-white sticky top-0" : ""
