@@ -128,10 +128,10 @@ const Sauna = () => {
               {ii === 0 ? (
                 <>
                   <Text size='3' className='block'>
-                    {a?.label[0]}
+                    {a?.label![0]}
                   </Text>
 
-                  <Text size='3'> {a?.label[1] + " " + a?.label[2]}</Text>
+                  <Text size='3'> {a?.label![1] + " " + a?.label![2]}</Text>
                 </>
               ) : (
                 a.label
