@@ -2,7 +2,6 @@
 import { AlertDialog, Button, Flex, Grid, Text } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 
-
 const bookinHours = [];
 
 const getAllBookinHours = (index: number): { date: string }[] => {
@@ -125,7 +124,7 @@ let styleForGrid = {
 };
 
 const Sauna = () => {
-  const bookSauna = (e) => {
+  const bookSauna = (e: any) => {
     console.log(e.target);
     console.log(e.target.dataset.dateAndTime);
     setShowDialog(true);
