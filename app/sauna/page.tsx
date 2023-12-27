@@ -2,9 +2,10 @@
 import { AlertDialog, Button, Flex, Grid, Text } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 
+
 const bookinHours = [];
 
-const getAllBookinHours = (index: number): { date: Date }[] => {
+const getAllBookinHours = (index: number): { date: string }[] => {
   const allBookinHours = [];
   console.log(getAll(index - 1));
   for (let i = 1; i <= 25; i++) {
@@ -80,7 +81,7 @@ const getAllHours = () => {
   return hours;
 };
 
-const moveToClosetsHour = (time: Date) => {
+const moveToClosetsHour = (time: string) => {
   const newTime = new Date(time);
 
   return newTime.setHours(newTime.getHours() + 1);
