@@ -4,21 +4,23 @@ import { useEffect, useState } from "react";
 
 const bookinHours = [];
 
-const getAllBookinHours = (index: number) => {
+const getAllBookinHours = (index: number): { date: Date }[] => {
   const allBookinHours = [];
   console.log(getAll(index - 1));
   for (let i = 1; i <= 25; i++) {
-    allBookinHours.push(
-      i === 1
-        ? { label: getAll(index - 1).dateFormated }
-        : {
-            label: getAll(index - 1).dateNumerical + "T" + getAllHours()[i - 1],
-            //timeDate: getAll(index - 1).dateNumerical + getAllHours()[i - 1],
-          }
-    );
+    allBookinHours.push({
+      date: getAll(index).dateNumerical + "T" + getAllHours()[i - 1],
+    });
   }
   return allBookinHours;
 };
+
+const getDateFormated = (index: number): { date: string[] } => {
+  return {
+    date: getAll(index).dateFormated,
+  };
+};
+
 const getAll = (addNumbersOfDays: number) => {
   //.toISOString().slice(0, 10);
   //   const dateNow = new Date();
@@ -116,7 +118,7 @@ let styleForGrid = {
     "1fr 1fr 1fr 1fr  1fr  1fr  1fr 1fr 1fr  1fr  1fr  1fr",
   //  "position": "fixed"
   //contain: "paint",
-  height: "600px",
+  height: "500px",
   width: "100%",
   overflow: "auto",
 };
@@ -129,11 +131,16 @@ const Sauna = () => {
   };
   const [showDialog, setShowDialog] = useState(false);
   useEffect(() => {
-    document.getElementById("grid").style.height =
-      innerHeight -
-      document.getElementById("grid").getBoundingClientRect().top -
-      30 +
-      "px";
+    // if (
+    //   document.getElementById("grid").style &&
+    //   document.getElementById("grid").getBoundingClientRect()
+    // ) {
+    //   document.getElementById("grid").style.height =
+    //     innerHeight -
+    //     document.getElementById("grid").getBoundingClientRect().top -
+    //     30 +
+    //     "px";
+    // }
   }, []);
   const allHours = getAllHours();
   console.log(allHours);
@@ -168,6 +175,7 @@ const Sauna = () => {
           {allHours.map((a, i) =>
             i === 0 ? (
               <div
+                key='jjj'
                 style={{
                   width: "4.5em",
                   height: "3em",
@@ -193,12 +201,12 @@ const Sauna = () => {
             )
           )}
         </Flex>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
-          <Flex direction='column' key={i} onClick={bookSauna}>
-            {getAllBookinHours(i).map((a, ii) =>
-              ii === 0 ? (
+        {Array.from(Array(10).keys()).map((day) => (
+          <Flex direction='column' key={day} onClick={bookSauna}>
+            {Array.from(Array(25).keys()).map((i) =>
+              i === 0 ? (
                 <div
-                  key={Array.isArray(a.label) ? a.label[1] : a.label}
+                  key={getDateFormated(day).date[1]}
                   style={{
                     margin: "2px",
                     borderRadius: "5px",
@@ -209,28 +217,46 @@ const Sauna = () => {
                   className={`flex items-center justify-center flex-col sticky top-0  `}
                 >
                   <Text size='3' className='block'>
-                    {a?.label![0]}
+                    {getDateFormated(day).date[0]}
                   </Text>
-                  <Text size='3'> {a?.label![1] + " " + a?.label![2]}</Text>
+                  <Text size='3'>
+                    {" "}
+                    {getDateFormated(day).date[1] +
+                      " " +
+                      getDateFormated(day).date[2]}
+                  </Text>
                 </div>
               ) : (
                 <Button
+                  data-te-ripple-init
+                  data-te-ripple-color='light'
+                  data-te-ripple-duration='1000ms'
                   color='lime'
                   variant='classic'
                   size='4'
-                  disabled={new Date().getTime() > moveToClosetsHour(a.label)}
-                  data-date-and-time={a.label}
-                  key={a.label}
+                  disabled={
+                    new Date().getTime() >
+                    moveToClosetsHour(getAllBookinHours(day)[i].date)
+                  }
+                  data-date-and-time={getAllBookinHours(day)[i].date}
+                  key={getAllBookinHours(day)[i].date.toString()}
                   style={{
                     margin: "2px 2px 2px 2px",
                     // zIndex: -2,
                   }}
                   className={`flex items-center justify-center flex-col hover:bg-purple-700
             
-            ${new Date().getTime() > moveToClosetsHour(a.label) ? "" : ""}
+            ${
+              new Date().getTime() >
+              moveToClosetsHour(getAllBookinHours(day)[i].date)
+                ? ""
+                : ""
+            }
             `}
                 >
-                  <Text size='1'>{a.label}</Text>
+                  <Text size='1'>
+                    {getAllBookinHours(day)[i].date.toString()}
+                  </Text>
                 </Button>
               )
             )}
