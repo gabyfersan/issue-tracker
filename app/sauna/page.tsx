@@ -6,10 +6,11 @@ const bookinHours = [];
 
 const getAllBookinHours = (index: number): { date: string }[] => {
   const allBookinHours = [];
-  console.log(getAll(index - 1));
+  const all = getAll(index);
+  console.log("kkkk");
   for (let i = 1; i <= 25; i++) {
     allBookinHours.push({
-      date: getAll(index).dateNumerical + "T" + getAllHours()[i - 1],
+      date: all.dateNumerical + "T" + allHours[i - 1],
     });
   }
   return allBookinHours;
@@ -80,6 +81,8 @@ const getAllHours = () => {
   return hours;
 };
 
+const allHours = getAllHours();
+
 const moveToClosetsHour = (time: string) => {
   const newTime = new Date(time);
 
@@ -142,8 +145,9 @@ const Sauna = () => {
     //     "px";
     // }
   }, []);
-  const allHours = getAllHours();
-  console.log(allHours);
+  //const allHours = getAllHours();
+  //console.log(allHours);
+  let getAllBookinHoursDayAndI: { date: string }[];
   return (
     <>
       {" "}
@@ -201,67 +205,57 @@ const Sauna = () => {
             )
           )}
         </Flex>
-        {Array.from(Array(10).keys()).map((day) => (
-          <Flex direction='column' key={day} onClick={bookSauna}>
-            {Array.from(Array(25).keys()).map((i) =>
-              i === 0 ? (
-                <div
-                  key={getDateFormated(day).date[1]}
-                  style={{
-                    margin: "2px",
-                    borderRadius: "5px",
-                    backgroundColor: "#ffd8a8",
-                    opacity: 1,
-                    zIndex: 1,
-                  }}
-                  className={`flex items-center justify-center flex-col sticky top-0  `}
-                >
-                  <Text size='3' className='block'>
-                    {getDateFormated(day).date[0]}
-                  </Text>
-                  <Text size='3'>
-                    {" "}
-                    {getDateFormated(day).date[1] +
-                      " " +
-                      getDateFormated(day).date[2]}
-                  </Text>
-                </div>
-              ) : (
-                <Button
-                  data-te-ripple-init
-                  data-te-ripple-color='light'
-                  data-te-ripple-duration='1000ms'
-                  color='lime'
-                  variant='classic'
-                  size='4'
-                  disabled={
-                    new Date().getTime() >
-                    moveToClosetsHour(getAllBookinHours(day)[i].date)
-                  }
-                  data-date-and-time={getAllBookinHours(day)[i].date}
-                  key={getAllBookinHours(day)[i].date.toString()}
-                  style={{
-                    margin: "2px 2px 2px 2px",
-                    // zIndex: -2,
-                  }}
-                  className={`flex items-center justify-center flex-col hover:bg-purple-700
-            
-            ${
-              new Date().getTime() >
-              moveToClosetsHour(getAllBookinHours(day)[i].date)
-                ? ""
-                : ""
-            }
-            `}
-                >
-                  <Text size='1'>
-                    {getAllBookinHours(day)[i].date.toString()}
-                  </Text>
-                </Button>
-              )
-            )}
-          </Flex>
-        ))}
+        {Array.from(Array(10).keys()).map((day) => {
+          getAllBookinHoursDayAndI = getAllBookinHours(day);
+          return (
+            <Flex direction='column' key={day} onClick={bookSauna}>
+              {Array.from(Array(25).keys()).map((i) =>
+                i === 0 ? (
+                  <div
+                    key={getDateFormated(day).date[1]}
+                    style={{
+                      margin: "2px",
+                      borderRadius: "5px",
+                      backgroundColor: "#ffd8a8",
+                      opacity: 1,
+                      zIndex: 1,
+                    }}
+                    className={`flex items-center justify-center flex-col sticky top-0  `}
+                  >
+                    <Text size='3' className='block'>
+                      {getDateFormated(day).date[0]}
+                    </Text>
+                    <Text size='3'>
+                      {" "}
+                      {getDateFormated(day).date[1] +
+                        " " +
+                        getDateFormated(day).date[2]}
+                    </Text>
+                  </div>
+                ) : (
+                  <Button
+                    color='lime'
+                    variant='classic'
+                    size='4'
+                    disabled={
+                      new Date().getTime() >
+                      moveToClosetsHour(getAllBookinHoursDayAndI[i].date)
+                    }
+                    data-date-and-time={getAllBookinHoursDayAndI[i].date}
+                    key={getAllBookinHoursDayAndI[i].date}
+                    style={{
+                      margin: "2px 2px 2px 2px",
+                      // zIndex: -2,
+                    }}
+                    className={`flex items-center justify-center flex-col hover:bg-purple-700 `}
+                  >
+                    <Text size='1'>{getAllBookinHoursDayAndI[i].date}</Text>
+                  </Button>
+                )
+              )}
+            </Flex>
+          );
+        })}
       </Grid>
     </>
   );
